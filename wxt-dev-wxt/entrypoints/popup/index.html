@@ -4,194 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sipalotl</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            width: 350px;
-            height: 500px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #87CEEB 0%, #98D8E8 100%);
-            overflow: hidden;
-        }
-
-        .container {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            position: relative;
-        }
-
-        /* Welcome Page */
-        .welcome-page {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        .welcome-page.hidden {
-            display: none !important;
-        }
-
-        .logo {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #FF69B4;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .mascot-container {
-            width: 120px;
-            height: 120px;
-            margin: 20px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .mascot {
-            width: 100px;
-            height: 100px;
-            background: url('../../public/icon/mascot.png') center/contain no-repeat;
-            animation: bounce 2s ease-in-out infinite;
-        }
-
-        .welcome-text {
-            color: #2C5F7C;
-            font-size: 1.1em;
-            line-height: 1.5;
-            margin-bottom: 30px;
-            max-width: 280px;
-        }
-
-        .welcome-button {
-            background: linear-gradient(135deg, #FF69B4 0%, #FF1493 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.1em;
-            font-weight: bold;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
-        }
-
-        .welcome-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
-        }
-
-        .welcome-button:active {
-            transform: translateY(0);
-        }
-
-        /* Main Page (blank for now) */
-        .main-page {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        .main-page.active {
-            display: flex !important;
-        }
-
-        .back-button {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: #2C5F7C;
-            padding: 8px 12px;
-            border-radius: 15px;
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: background 0.3s ease;
-        }
-
-        .back-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .main-content {
-            color: #2C5F7C;
-            font-size: 1.2em;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* Water droplet decorations */
-        .droplet {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50% 50% 50% 0;
-            transform: rotate(-45deg);
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .droplet:nth-child(1) {
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .droplet:nth-child(2) {
-            top: 60%;
-            right: 15%;
-            animation-delay: 1s;
-        }
-
-        .droplet:nth-child(3) {
-            bottom: 30%;
-            left: 20%;
-            animation-delay: 2s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: rotate(-45deg) translateY(0); opacity: 0.3; }
-            50% { transform: rotate(-45deg) translateY(-20px); opacity: 0.7; }
-        }
-
-        /* Hide calculator by default, but allow JavaScript to show it */
-        .gigacalculator {
-            display: none;
-            position: relative;
-            height: 100%;
-            padding: 15px;
-        }
-        
-        .gigacalculator.show {
-            display: flex;
-            flex-direction: column;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
@@ -199,6 +12,16 @@
         <div class="droplet"></div>
         <div class="droplet"></div>
         <div class="droplet"></div>
+        <div class="droplet"></div>
+        <div class="droplet"></div>
+        <div class="droplet"></div>
+        <div class="droplet"></div>
+        <div class="droplet"></div>
+
+
+
+
+
 
         <!-- Welcome Page -->
         <div class="welcome-page" id="welcomePage">
@@ -212,7 +35,8 @@
             <button class="welcome-button" id="getStartedBtn">Get Started</button>
         </div>
 
-        <!-- Main Page (blank for now) -->
+        <!-- Main Page (blank for now) --> 
+         <!-- TODO: Add an option to input a goal Liter/day or if unknown redirect to calculator.  -->
         <div class="main-page" id="mainPage">
             <button class="back-button" id="backBtn">← Back</button>
             <div class="main-content">
@@ -223,45 +47,49 @@
             <button class="welcome-button" id="calculatorBtn">Calculator</button>
         </div>
 
-        <div class="gigacalculator" id="gigacalculator" data-tool="/calculators/water-intake-calculator.php" data-width="450">
+        <div class="calculator" id="calculator" data-tool="/calculators/water-intake-calculator.php" data-width="450">
           <button class="back-button" id="calcBackBtn">← Back</button>
-          <div class="gigacalctitle">Water Intake Calculator</div>
-          <div class="gigacalcfooter">
-            <a href="https://www.gigacalculator.com/calculators/water-intake-calculator.php">Water Intake Calculator</a> by <a class="gigacalclink" href="https://www.gigacalculator.com/">GIGAcalculator.com</a>
-          </div>
+          <div class="input-group">
+            <label class="input-label">Gender</label>
+            <div class="radio-group">
+                <input type="radio" id="male" name="gender" value="male">
+                <label for="male" class="radio-label">Male</label>
+                
+                <input type="radio" id="female" name="gender" value="female">
+                <label for="female" class="radio-label">Female</label>
+                
+                <input type="radio" id="other" name="gender" value="other">
+                <label for="other" class="radio-label">Other</label>
+            </div>
+            <div class="slider-container">
+                <label class="input-label">Age</label>
+                <input type="range" min="0" max="100" value="25" class="slider" id="ageSlider">
+                <span class="slider-value" id="sliderValue">25</span>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Weight (kg)</label>
+                <input type="number" id="weight" name="weight" placeholder="Enter your weight" min="20" max="300" step="0.1">
+              </div>
+              <label class="input-label">Physical Activity Level</label>
+              <div class="radio-group">
+                  <input type="radio" id="sedentary" name="activity" value="sedentary">
+                  <label for="sedentary" class="radio-label">Sedentary</label>
+                  
+                  <input type="radio" id="light" name="activity" value="light">
+                  <label for="light" class="radio-label">Light</label>
+                  
+                  <input type="radio" id="moderate" name="activity" value="moderate">
+                  <label for="moderate" class="radio-label">Moderate</label>
+                  
+                  <input type="radio" id="active" name="activity" value="active">
+                  <label for="active" class="radio-label">Very Active</label>
+              </div>
+
         </div>
-        <script defer src="https://cdn.gigacalculator.com/embed.min.js"></script>
+        <button class="welcome-button" id="submitCalc">Calculate</button>
+
+
     </div>
-
-    <script>
-        function showMainPage() {
-            document.getElementById('welcomePage').classList.add('hidden');
-            document.getElementById('mainPage').classList.add('active');
-            document.getElementById('gigacalculator').classList.remove('show');
-        }
-
-        function showWelcomePage() {
-            document.getElementById('welcomePage').classList.remove('hidden');
-            document.getElementById('mainPage').classList.remove('active');
-            document.getElementById('gigacalculator').classList.remove('show');
-        }
-
-        function showCalculator() {
-            document.getElementById('welcomePage').classList.add('hidden');
-            document.getElementById('mainPage').classList.remove('active');
-            document.getElementById('gigacalculator').classList.add('show');
-        }
-
-        // Initialize the popup
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Sipalotl popup loaded!');
-            
-            // Add event listeners instead of inline onclick
-            document.getElementById('getStartedBtn').addEventListener('click', showMainPage);
-            document.getElementById('backBtn').addEventListener('click', showWelcomePage);
-            document.getElementById('calculatorBtn').addEventListener('click', showCalculator);
-            document.getElementById('calcBackBtn').addEventListener('click', showMainPage);
-        });
-    </script>
+    <script type="module" src="index.ts"></script>
 </body>
 </html>
