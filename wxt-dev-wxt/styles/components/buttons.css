@@ -1,0 +1,143 @@
+/* ===== BUTTON BASE STYLES ===== */
+.btn-base {
+    border: none;
+    cursor: pointer;
+    transition: all var(--duration-fast) ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== WELCOME BUTTON ===== */
+.welcome-button {
+    background: linear-gradient(135deg, var(--accent-pink) 0%, var(--dark-pink) 100%);
+    color: white;
+    border: none;
+    padding: var(--spacing-md) 40px;
+    font-size: var(--font-lg);
+    font-weight: bold;
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    transition: all var(--duration-fast) ease;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+}
+
+.welcome-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+}
+
+.welcome-button:active {
+    transform: translateY(0);
+}
+
+/* ===== NAVIGATION BUTTONS ===== */
+.back-button {
+    position: absolute;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    background: var(--white-overlay);
+    border: none;
+    color: var(--primary-blue);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: var(--font-sm);
+    transition: background var(--duration-fast) ease;
+}
+
+.settings-button {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    background: var(--white-overlay);
+    border: none;
+    color: var(--primary-blue);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: var(--font-sm);
+    transition: background var(--duration-fast) ease;
+}
+
+.back-button:hover,
+.settings-button:hover {
+    background: var(--white-overlay-hover);
+}
+
+/* ===== WATER TRACKING BUTTON ===== */
+.add-water-btn {
+    background: linear-gradient(135deg, var(--sky-blue) 0%, var(--light-blue) 100%);
+    color: var(--primary-blue);
+    border: 2px solid rgba(68, 133, 158, 0.5);
+    padding: 10px var(--spacing-lg);
+    font-size: var(--font-sm);
+    font-weight: bold;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--duration-fast) ease;
+    width: 100%;
+    box-shadow: 0 3px 10px rgba(135, 206, 235, 0.3);
+}
+
+.add-water-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(135, 206, 235, 0.4);
+    background: linear-gradient(135deg, var(--light-blue) 0%, var(--sky-blue) 100%);
+}
+
+/* ===== MODAL BUTTONS ===== */
+.modal-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: var(--font-xl);
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--duration-fast) ease;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.save-settings-btn {
+    background: linear-gradient(135deg, var(--accent-pink) 0%, var(--dark-pink) 100%);
+    color: white;
+    border: none;
+    padding: var(--spacing-sm) 24px;
+    font-size: var(--font-base);
+    font-weight: bold;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--duration-fast) ease;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+}
+
+.save-settings-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+}
+
+.reset-button {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
+    color: white;
+    border: none;
+    padding: 10px var(--spacing-lg);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: var(--font-sm);
+    font-weight: bold;
+    transition: all var(--duration-fast) ease;
+    width: 100%;
+}
+
+.reset-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+} 

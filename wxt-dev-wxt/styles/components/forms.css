@@ -1,0 +1,327 @@
+.input-group {
+    margin-bottom: 20px;
+    margin-top: 30px;
+    width: 100%;
+}
+
+.input-label {
+    display: block;
+    color: var(--primary-blue);
+    font-size: 1em;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+/* ===== RADIO BUTTONS ===== */
+
+.radio-group {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.radio-group input[type="radio"] {
+    display: none;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 12px;
+    background: var(--white-overlay);
+    border: 1px solid rgba(135, 206, 235, 0.3);
+    border-radius: 15px;
+    color: var(--primary-blue);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* position: relative; */
+    font-size: 0.85em;
+    flex: 1;
+    text-align: center;
+}
+
+/* Add a custom radio indicator */
+.radio-label::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--sky-blue);
+    border-radius: 50%;
+    margin-right: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+.radio-label:hover {
+    background: var(--white-overlay-hover);
+    border-color: var(--sky-blue);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(135, 206, 235, 0.2);
+}
+
+.radio-group input[type="radio"]:checked + .radio-label {
+    background: linear-gradient(135deg, var(--sky-blue) 0%, var(--light-blue) 100%);
+    border-color: var(--accent-pink);
+    color: white;
+    font-weight: 600;
+}
+
+/* Selected radio indicator */
+.radio-group input[type="radio"]:checked + .radio-label::before {
+    background: var(--accent-pink);
+    border-color: white;
+    box-shadow: inset 0 0 0 3px white;
+}
+
+/* ===== SLIDER STYLES ===== */
+.slider-container {
+    margin-bottom: 20px;
+    margin-top: 20px;
+    width: 100%;
+    position: relative;
+}
+
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: var(--white-overlay);
+    outline: none;
+    border-radius: 25px;
+    box-shadow: inset 0 2px 4px rgba(44, 95, 124, 0.2);
+    transition: all 0.3s ease;
+    border: 2px solid rgba(135, 206, 235, 0.3);
+    position: relative;
+    z-index: 2;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    border-color: var(--sky-blue);
+    box-shadow: 0 4px 12px rgba(135, 206, 235, 0.3);
+}
+
+/* The slider handle (WebKit browsers: Chrome, Safari, Edge) */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, var(--accent-pink) 0%, var(--dark-pink) 100%);
+    cursor: pointer;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.4);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 3;
+}
+
+.slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(255, 105, 180, 0.5);
+}
+
+/* Firefox slider handle */
+.slider::-moz-range-thumb {
+    width: 200px;
+    height: 20px;
+    background: linear-gradient(135deg, var(--accent-pink) 0%, var(--dark-pink) 100%);
+    cursor: pointer;
+    border-radius: 50%;
+    border: 30px solid white;
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.4);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 3;
+}
+
+.slider::-moz-range-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(255, 105, 180, 0.5);
+}
+
+/* Firefox track styling */
+.slider::-moz-range-track {
+    width: 100%;
+    height: 10px;
+    background: var(--white-overlay);
+    border-radius: 25px;
+    border: 2px solid rgba(135, 206, 235, 0.3);
+}
+
+/* Axolotl image behind slider thumb */
+.slider-container::before {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url('/icon/croppedSlider.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 20px;
+    top: -30px;
+    
+    left: calc(var(--thumb-position, 0px) - 18px);
+    transition: all 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Year value display below slider */
+.slider-value {
+    position: absolute;
+    left: 0;
+    top: 25px;
+    background: var(--white-overlay);
+    color: var(--primary-blue);
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    margin-top: 20px;
+    font-weight: 600;
+    border: 1px solid rgba(135, 206, 235, 0.3);
+    min-width: 50px;
+    text-align: center;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 2;
+}
+
+
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes float {
+    0%, 100% { transform: rotate(-45deg) translateY(0); opacity: 0.3; }
+    50% { transform: rotate(-45deg) translateY(-20px); opacity: 0.7; }
+}
+
+/* ===== TEXT/NUMBER INPUT STYLES ===== */
+input[type="number"] {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--white-overlay);
+    border: 2px solid rgba(135, 206, 235, 0.3);
+    border-radius: 15px;
+    color: var(--primary-blue);
+    font-size: 0.95em;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    outline: none;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+input[type="number"]:focus {
+    border-color: var(--sky-blue);
+    background: var(--white-overlay-hover);
+    box-shadow: 0 4px 12px rgba(135, 206, 235, 0.2);
+    transform: translateY(-1px);
+}
+
+input[type="number"]:hover {
+    border-color: var(--sky-blue);
+    background: var(--white-overlay-hover);
+}
+
+input[type="number"]::placeholder {
+    color: rgba(44, 95, 124, 0.6);
+    font-style: italic;
+}
+
+/* Remove default number input arrows for cleaner look */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+/* ===== SELECT DROPDOWN ===== */
+select {
+    width: 100%;
+    padding: 10px var(--spacing-sm);
+    background: var(--white-overlay);
+    border: 2px solid rgba(135, 206, 235, 0.3);
+    border-radius: var(--radius-sm);
+    color: var(--primary-blue);
+    font-size: var(--font-sm);
+    cursor: pointer;
+    transition: all var(--duration-fast) ease;
+}
+
+select:focus {
+    border-color: var(--sky-blue);
+    box-shadow: 0 3px 10px rgba(135, 206, 235, 0.2);
+    outline: none;
+}
+
+/* ===== CHECKBOX STYLES ===== */
+input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--primary-blue);
+    font-size: var(--font-sm);
+    position: relative;
+    padding-left: 30px;
+}
+
+.checkbox-label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    background: var(--white-overlay);
+    border: 2px solid rgba(135, 206, 235, 0.3);
+    border-radius: 6px;
+    transition: all var(--duration-fast) ease;
+}
+
+input[type="checkbox"]:checked + .checkbox-label::before {
+    background: var(--accent-pink);
+    border-color: var(--dark-pink);
+}
+
+.checkbox-label::after {
+    content: '✓';
+    position: absolute;
+    left: 5px;
+    top: -1px;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity var(--duration-fast) ease;
+}
+
+input[type="checkbox"]:checked + .checkbox-label::after {
+    opacity: 1;
+} 
+
+.setting-item {
+    margin-bottom: 20px;
+}

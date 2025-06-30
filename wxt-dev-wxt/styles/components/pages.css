@@ -1,0 +1,119 @@
+
+/* ===== WELCOME PAGE ===== */
+.welcome-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.welcome-page.hidden {
+    display: none !important;
+}
+
+.logo {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: var(--accent-pink);
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.mascot-container {
+    width: 120px;
+    height: 120px;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mascot {
+    width: 100px;
+    height: 100px;
+    background: url('/icon/mascot.png') center/contain no-repeat;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+.welcome-text {
+    color: var(--primary-blue);
+    font-size: 1.1em;
+    line-height: 1.5;
+    margin-bottom: 30px;
+    max-width: 280px;
+}
+
+.welcome-button {
+    background: linear-gradient(135deg, var(--accent-pink) 0%, var(--dark-pink) 100%);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+}
+
+.welcome-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+}
+
+.welcome-button:active {
+    transform: translateY(0);
+}
+
+/* ===== MAIN PAGE ===== */
+.main-page {
+    display: none;
+    flex-direction: column;
+    /* align-items: center; */
+    /* justify-content: center; */
+    text-align: center;
+    animation: fadeIn 0.5s ease-in;
+    /* border: 1px solid red; */
+    height: 100%;
+    width: 100%;
+}
+
+.main-page.active {
+    display: flex !important;
+}
+
+.main-content {
+    color: var(--primary-blue);
+    font-size: 1.2em;
+    margin-top: 30px;
+    
+}
+
+.togglePet {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* ===== CALCULATOR ===== */
+.calculator {
+    display: none;
+    /* position: relative; */
+    height: 100%;
+    padding: 15px;
+}
+
+.calculator.show {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Calculator back button positioning fix */
+.calculator .back-button {
+    top: 15px;
+    left: 15px;
+}

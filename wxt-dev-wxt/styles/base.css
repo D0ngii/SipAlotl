@@ -1,0 +1,121 @@
+/* ===== CSS CUSTOM PROPERTIES ===== */
+:root {
+    --primary-blue: #2C5F7C;
+    --sky-blue: #87CEEB;
+    --light-blue: #98D8E8;
+    --accent-pink: #FF69B4;
+    --dark-pink: #FF1493;
+    --white-overlay: rgba(255, 255, 255, 0.2);
+    --white-overlay-hover: rgba(255, 255, 255, 0.3);
+    
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 16px;
+    --spacing-lg: 20px;
+    --spacing-xl: 30px;
+    
+    /* Font sizes */
+    --font-xs: 0.8em;
+    --font-sm: 0.9em;
+    --font-base: 1em;
+    --font-lg: 1.1em;
+    --font-xl: 1.2em;
+    --font-2xl: 2.5em;
+    
+    /* Border radius */
+    --radius-sm: 12px;
+    --radius-md: 15px;
+    --radius-lg: 20px;
+    --radius-xl: 25px;
+    
+    /* Animation durations */
+    --duration-fast: 0.3s;
+    --duration-medium: 0.5s;
+    --duration-slow: 2s;
+}
+
+/* ===== RESET & BASE STYLES ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 350px;
+    height: 500px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--sky-blue) 0%, var(--light-blue) 100%);
+    overflow: hidden;
+}
+
+/* ===== LAYOUT COMPONENTS ===== */
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+    position: relative;
+}
+
+/* ===== UTILITY CLASSES ===== */
+.hidden {
+    display: none !important;
+}
+
+.active {
+    display: flex !important;
+}
+
+.show {
+    display: flex !important;
+}
+
+/* Blur effect for background content when modal is open */
+.modal-blur > *:not(.modal-overlay) {
+    filter: blur(1.5px);
+    transition: filter var(--duration-fast) ease;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes float {
+    0%, 100% { transform: rotate(-45deg) translateY(0); opacity: 0.3; }
+    50% { transform: rotate(-45deg) translateY(-20px); opacity: 0.7; }
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes slideIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(-20px) scale(0.95); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+
+/* Import component styles */
+@import url('./components/pages.css');
+@import url('./components/buttons.css');
+@import url('./components/forms.css');
+@import url('./components/progress.css');
+@import url('./components/modal.css');
+@import url('./components/decorations.css'); 
