@@ -10,10 +10,6 @@ declare module "wxt/browser" {
     | "/icon/croppedSlider.png"
     | "/icon/mascot.png"
     | "/icon/slider.png"
-    | "/icons/128.png"
-    | "/icons/16.png"
-    | "/icons/32.png"
-    | "/icons/48.png"
     | "/popup.html"
     | "/wxt.svg"
   type HtmlPublicPath = Extract<PublicPath, `${string}.html`>
