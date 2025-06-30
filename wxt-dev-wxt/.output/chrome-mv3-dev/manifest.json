@@ -3,18 +3,6 @@
   "name": "SipAlotl",
   "description": "",
   "version": "0.1.0",
-  "icons": {
-    "16": "icon/icon-16.png",
-    "24": "icon/icon-24.png",
-    "32": "icon/icon-32.png",
-    "48": "icon/icon-48.png",
-    "96": "icon/icon-96.png",
-    "128": "icon/icon-128.png"
-  },
-  "options_ui": {
-    "page": "popup/index.html",
-    "open_in_tab": false
-  },
   "action": {
     "default_title": "Sipalotl",
     "default_popup": "popup.html"
@@ -26,12 +14,8 @@
   "permissions": [
     "storage",
     "activeTab",
-    "scripting",
     "tabs",
-    "sidePanel",
-    "declarativeNetRequest",
-    "debugger",
-    "tabGroups"
+    "scripting"
   ],
   "host_permissions": [
     "<all_urls>",
@@ -39,6 +23,9 @@
     "http://*/*",
     "*://*.google.com/*",
     "http://localhost/*"
+  ],
+  "modules": [
+    "@wxt-dev/auto-icons"
   ],
   "commands": {
     "wxt:reload-extension": {

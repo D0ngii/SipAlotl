@@ -5,8 +5,7 @@
 <script src="http://localhost:3000/@id/virtual:wxt-html-plugins" type="module"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sipalotl</title>
-    <link rel="stylesheet" href="http://localhost:3000/entrypoints/popup/style.css">  <script type="module" crossorigin="" src="/chunks/popup-f02QKjXp.js"></script>
+    <title>Sipalotl</title>  <script type="module" crossorigin="" src="/chunks/popup-f02QKjXp.js"></script>
 </head>
 <body>
     <div class="container">
@@ -19,11 +18,6 @@
         <div class="droplet"></div>
         <div class="droplet"></div>
         <div class="droplet"></div>
-
-
-
-
-
 
         <!-- Welcome Page -->
         <div class="welcome-page" id="welcomePage">
@@ -41,12 +35,30 @@
          <!-- TODO: Add an option to input a goal Liter/day or if unknown redirect to calculator.  -->
         <div class="main-page" id="mainPage">
             <button class="back-button" id="backBtn">← Back</button>
+            <button class="settings-button" id="settingsBtn">Settings ⚙️</button>
             <div class="main-content">
-                <h2>Welcome to Sipalotl!</h2>
-                <p>This is your main dashboard.</p>
-                <p style="margin-top: 20px; color: #888;">Coming soon: Water tracking, axolotl animations, and more!</p>
+                <!-- <h2>Welcome to Sipalotl!</h2> -->
+                <h3>He's THIRSTY! 💧</h3>
             </div>
-            <button class="welcome-button" id="calculatorBtn">Calculator</button>
+
+            <!-- Water Intake Progress Bar -->
+            <div class="progress-section" id="progressSection">
+                <div class="progress-label">
+                    <span id="progressText">0/2.5L</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <button class="add-water-btn" id="addWaterBtn">+ Add Water</button>
+            </div>
+            
+
+            <button class="welcome-button" id="calculatorBtn">Recalculate Goal</button>
+            <div class="togglePet">
+                <label for="pet">Toggle Pet:</label>
+                <input type="checkbox" id="pet" checked>
+                <span class="checkbox-label">Show Axolotl</span>
+            </div>
         </div>
 
         <div class="calculator" id="calculator" data-tool="/calculators/water-intake-calculator.php" data-width="450">
@@ -90,7 +102,40 @@
         </div>
         <button class="welcome-button" id="submitCalc">Calculate</button>
 
+    </div>
 
+    <!-- Settings Modal (moved outside container) -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Settings ⚙️</h3>
+                <button class="modal-close" id="closeSettings">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-item">
+                    <!-- This can go later, but for now it's here -->
+                    <label for="waterAmount">Water increment (ml):</label>
+                    <select id="waterAmount">
+                        <option value="100">100ml</option>
+                        <option value="200">200ml</option>
+                        <option value="250" selected>250ml</option>
+                        <option value="300">300ml</option>
+                        <option value="500">500ml</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <label for="notifications">Daily reminders:</label>
+                    <input type="checkbox" id="notifications" checked>
+                    <span class="checkbox-label">Enable notifications</span>
+                </div>
+                <div class="setting-item">
+                    <button class="reset-button" id="resetData">Reset All Data</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="save-settings-btn" id="saveSettings">Save Settings</button>
+            </div>
+        </div>
     </div>
     <script type="module" src="http://localhost:3000/entrypoints/popup/index.ts"></script>
 </div></body>

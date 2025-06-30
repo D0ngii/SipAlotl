@@ -15,7 +15,7 @@ declare global {
   const defineWxtPlugin: typeof import('wxt/utils/define-wxt-plugin')['defineWxtPlugin']
   const fakeBrowser: typeof import('wxt/testing')['fakeBrowser']
   const injectScript: typeof import('wxt/utils/inject-script')['injectScript']
-  const setupCounter: typeof import('/Users/jessedong/Desktop/SipAlotl/wxt-dev-wxt/components/counter')['setupCounter']
+  const setupCounter: typeof import('C:/Users/Jesse/Desktop/SipAlotl/wxt-dev-wxt/components/counter')['setupCounter']
   const storage: typeof import('wxt/utils/storage')['storage']
   const useAppConfig: typeof import('wxt/utils/app-config')['useAppConfig']
 }

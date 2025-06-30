@@ -10,10 +10,6 @@ export default defineConfig({
     version: '0.1.0',
     version_name: '0.1.0',
 
-    options_ui: {
-      page: 'popup/index.html',
-      open_in_tab: false
-    },
 
     action: {
       // default_popup: 'popup.html'
@@ -36,13 +32,5 @@ export default defineConfig({
     ],
     modules: ['@wxt-dev/auto-icons'],
 
-    // icons: {
-    //   16:  'icon/icon-16.png',
-    //   24:  'icon/icon-24.png',
-    //   32:  'icon/icon-32.png',
-    //   48:  'icon/icon-48.png',
-    //   96:  'icon/icon-96.png',
-    //   128: 'icon/icon-128.png'
-    // }
   }
 });
