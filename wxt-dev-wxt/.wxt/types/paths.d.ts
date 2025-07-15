@@ -8,6 +8,7 @@ declare module "wxt/browser" {
     | "/background.js"
     | "/content-scripts/content.js"
     | "/icon/croppedSlider.png"
+    | "/icon/happy_idle_sheet.png"
     | "/icon/mascot.png"
     | "/icon/slider.png"
     | "/popup.html"

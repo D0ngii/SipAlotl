@@ -30,6 +30,14 @@ export default defineConfig({
       'https://*/*',
       'http://*/*'
     ],
+    
+    web_accessible_resources: [
+      {
+        resources: ['icon/*'],
+        matches: ['<all_urls>']
+      }
+    ],
+    
     modules: ['@wxt-dev/auto-icons'],
 
   }

@@ -1,0 +1,64 @@
+/* SipAlotl Content Script Styles */
+
+@keyframes sipalotl-sprite-animation {
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+/* Fallback emoji bounce animation */
+@keyframes sipalotl-emoji-bounce {
+  0%, 100% { 
+    transform: translateY(0px) scale(1); 
+  }
+  50% { 
+    transform: translateY(-5px) scale(1.1); 
+  }
+}
+
+
+
+/* Pet container styles */
+#sipalotl-pet {
+  position: fixed;
+  top: 100px;
+  right: 100px;
+  width: 100px;
+  height: 100px;
+  z-index: 2147483647;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.1s ease;
+  pointer-events: auto;
+  /* border-radius: 50%; */
+  /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); */
+  /* background: rgba(255, 255, 255, 0.9); */
+  overflow: hidden;
+}
+
+#sipalotl-pet:active {
+  cursor: grabbing;
+}
+
+/* Sprite element styles - 29 frames */
+.sipalotl-sprite {
+  width: 100%;
+  height: 100%;
+  background-size: 2900% auto;
+  background-repeat: no-repeat;
+  background-position: 0 50%;
+  animation: sipalotl-sprite-animation 2s steps(28) infinite alternate;
+  transform: scale(1.5);
+  transform-origin: center;
+}
+
+/* Fallback emoji styles */
+.sipalotl-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  animation: sipalotl-emoji-bounce 2s ease-in-out infinite;
+} 

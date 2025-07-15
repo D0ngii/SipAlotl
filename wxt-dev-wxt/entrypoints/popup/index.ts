@@ -205,10 +205,11 @@ function hideSettings() {
 }
 
 async function loadSettings() {
-    const result = await chrome.storage.local.get(['waterIncrement', 'notificationsEnabled']);
+    const result = await chrome.storage.local.get(['waterIncrement', 'notificationsEnabled', 'petEnabled']);
     
     const waterAmountSelect = document.getElementById('waterAmount') as HTMLSelectElement;
     const notificationsCheckbox = document.getElementById('notifications') as HTMLInputElement;
+    const petCheckbox = document.getElementById('pet') as HTMLInputElement;
     
     if (waterAmountSelect) {
         waterAmountSelect.value = (result.waterIncrement || 250).toString();
@@ -217,15 +218,21 @@ async function loadSettings() {
     if (notificationsCheckbox) {
         notificationsCheckbox.checked = result.notificationsEnabled !== false; // Default to true
     }
+    
+    if (petCheckbox) {
+        petCheckbox.checked = result.petEnabled || false; // Default to false
+    }
 }
 
 async function saveSettings() {
     const waterAmountSelect = document.getElementById('waterAmount') as HTMLSelectElement;
     const notificationsCheckbox = document.getElementById('notifications') as HTMLInputElement;
+    const petCheckbox = document.getElementById('pet') as HTMLInputElement;
     
     const settings = {
         waterIncrement: parseInt(waterAmountSelect?.value || '250'),
-        notificationsEnabled: notificationsCheckbox?.checked || false
+        notificationsEnabled: notificationsCheckbox?.checked || false,
+        petEnabled: petCheckbox?.checked || false
     };
     
     await chrome.storage.local.set(settings);
@@ -245,6 +252,19 @@ async function saveSettings() {
         }, 2000);
     }
     
+    // Apply pet toggle to current tab if needed
+    try {
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        if (tab.id) {
+            await chrome.tabs.sendMessage(tab.id, {
+                action: 'togglePet',
+                show: settings.petEnabled
+            });
+        }
+    } catch (error) {
+        console.error('Error applying pet settings:', error);
+    }
+    
     // Close modal after short delay
     setTimeout(hideSettings, 1500);
 }
@@ -255,6 +275,19 @@ async function resetAllData() {
     if (confirmReset) {
         await chrome.storage.local.clear();
         
+        // Remove pet from current tab if visible
+        try {
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (tab.id) {
+                await chrome.tabs.sendMessage(tab.id, {
+                    action: 'togglePet',
+                    show: false
+                });
+            }
+        } catch (error) {
+            console.error('Error removing pet during reset:', error);
+        }
+        
         // Reset UI
         showWelcomePage();
         
@@ -263,16 +296,29 @@ async function resetAllData() {
     }
 }
 
-function handlePetToggle() {
+async function handlePetToggle() {
     const pet = document.getElementById('pet') as HTMLInputElement;
     if (pet) {
         pet.checked = !pet.checked;
-        // Add your pet show/hide logic here
-        // For example:
-        // const mascot = document.querySelector('.mascot');
-        // if (mascot) {
-        //     mascot.style.display = pet.checked ? 'block' : 'none';
-        // }
+        
+        // Save the pet state to storage
+        await chrome.storage.local.set({ petEnabled: pet.checked });
+        
+        // Get the active tab and send message to content script
+        try {
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (tab.id) {
+                await chrome.tabs.sendMessage(tab.id, {
+                    action: 'togglePet',
+                    show: pet.checked
+                });
+            }
+        } catch (error) {
+            console.error('Error communicating with content script:', error);
+            // If there's an error (like no permission), revert the checkbox and storage
+            pet.checked = !pet.checked;
+            await chrome.storage.local.set({ petEnabled: pet.checked });
+        }
     }
 }
 
@@ -286,13 +332,32 @@ function handleNotificationsToggle() {
 // Initialize the popup
 document.addEventListener('DOMContentLoaded', async function() {
     console.log('Sipalotl popup loaded!');
-    const result = await chrome.storage.local.get(['waterIntakeTarget']);
+    const result = await chrome.storage.local.get(['waterIntakeTarget', 'petEnabled']);
     console.log(result);
+    
     if (result.waterIntakeTarget) {
         showMainPage();
         updateProgressBar();
     } else {
         showWelcomePage();
+    }
+
+    // Load settings including pet state
+    await loadSettings();
+    
+    // If pet was enabled, show it on the current tab
+    if (result.petEnabled) {
+        try {
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (tab.id) {
+                await chrome.tabs.sendMessage(tab.id, {
+                    action: 'togglePet',
+                    show: true
+                });
+            }
+        } catch (error) {
+            console.error('Error showing pet on initialization:', error);
+        }
     }
 
     // Add event listeners
