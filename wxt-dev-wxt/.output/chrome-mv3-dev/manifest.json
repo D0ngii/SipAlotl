@@ -28,7 +28,8 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "icon/*"
+        "icon/*",
+        "sprites/*"
       ],
       "matches": [
         "<all_urls>"

@@ -46,11 +46,11 @@ export default defineContentScript({
       // Create the animated sprite element
       const spriteElement = document.createElement('div');
       spriteElement.className = 'sipalotl-sprite';
-      spriteElement.style.backgroundImage = `url('${chrome.runtime.getURL('icon/happy_idle_sheet.png')}')`;
+      spriteElement.style.backgroundImage = `url('${chrome.runtime.getURL('sprites/happy_idle_sheet.png')}')`;
 
       // Add error handling for sprite sheet loading
       const testImage = new Image();
-      testImage.src = chrome.runtime.getURL('icon/happy_idle_sheet.png');
+      testImage.src = chrome.runtime.getURL('sprites/happy_idle_sheet.png');
       testImage.onerror = () => {
         console.error('Failed to load SipAlotl sprite sheet');
         // Create a fallback animated emoji pet if sprite fails to load
