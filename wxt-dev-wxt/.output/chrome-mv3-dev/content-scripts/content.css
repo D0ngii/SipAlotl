@@ -21,19 +21,16 @@
 /* Pet container styles */
 #sipalotl-pet {
   position: fixed;
-  top: 100px;
+  bottom: 100px;
   right: 100px;
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   z-index: 2147483647;
   cursor: grab;
   user-select: none;
   transition: transform 0.1s ease;
   pointer-events: auto;
-  /* border-radius: 50%; */
-  /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); */
-  /* background: rgba(255, 255, 255, 0.9); */
-  overflow: hidden;
+  overflow: visible;
 }
 
 #sipalotl-pet:active {
@@ -48,8 +45,9 @@
   background-repeat: no-repeat;
   background-position: 0 50%;
   animation: sipalotl-sprite-animation 2s steps(28) infinite alternate;
-  transform: scale(1.5);
+  transform: scale(1.2);
   transform-origin: center;
+  
 }
 
 /* Fallback emoji styles */

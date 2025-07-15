@@ -1,3 +1,4 @@
+
 import '/styles/content.css';
 
 export default defineContentScript({

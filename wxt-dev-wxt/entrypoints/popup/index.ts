@@ -112,11 +112,21 @@ async function submitCalculator() {
     }
     
     baseWater = baseWater + activityBonus;
+    
+    // Get current day info and preserve existing intake if same day
+    const dayInfo = await chrome.runtime.sendMessage({ action: 'getDayInfo' });
+    const currentDayId = dayInfo.currentDayId;
+    const currentData = await chrome.storage.local.get(['waterIntakeCurrent', 'currentDayId']);
+    
+    // Only reset intake if it's a new day, otherwise preserve current progress
+    const shouldPreserveIntake = currentData.currentDayId === currentDayId;
+    
     await chrome.storage.local.set({
         waterIntakeTarget: baseWater,
-        waterIntakeCurrent: 0,
-        lastResetDate: new Date().toDateString()
+        waterIntakeCurrent: shouldPreserveIntake ? (currentData.waterIntakeCurrent || 0) : 0,
+        currentDayId: currentDayId
     });
+    
     const result = await chrome.storage.local.get(['waterIntakeTarget', 'waterIntakeCurrent']);
     console.log(result);
     
@@ -126,16 +136,19 @@ async function submitCalculator() {
 }
 
 async function updateProgressBar() {
-    const result = await chrome.storage.local.get(['waterIntakeTarget', 'waterIntakeCurrent', 'lastResetDate']);
+    const result = await chrome.storage.local.get(['waterIntakeTarget', 'waterIntakeCurrent', 'currentDayId']);
     const target = result.waterIntakeTarget || 0;
     let current = result.waterIntakeCurrent || 0;
     
+    // Get current day info from background script
+    const dayInfo = await chrome.runtime.sendMessage({ action: 'getDayInfo' });
+    const currentDayId = dayInfo.currentDayId;
+    
     // Check if we need to reset for a new day
-    const today = new Date().toDateString();
-    if (result.lastResetDate !== today) {
+    if (result.currentDayId !== currentDayId) {
         await chrome.storage.local.set({
             waterIntakeCurrent: 0,
-            lastResetDate: today
+            currentDayId: currentDayId
         });
         current = 0;
     }
@@ -157,22 +170,37 @@ async function updateProgressBar() {
 }
 
 async function addWater() {
-    const result = await chrome.storage.local.get(['waterIntakeTarget', 'waterIntakeCurrent', 'waterIncrement', 'waterHistory']);
+    const result = await chrome.storage.local.get(['waterIntakeTarget', 'waterIntakeCurrent', 'waterIncrement', 'waterHistory', 'currentDayId']);
     const current = result.waterIntakeCurrent || 0;
     const target = result.waterIntakeTarget || 0;
     const increment = result.waterIncrement || 250; // Default to 250ml
     
+    // Get current day info to ensure we're tracking the right day
+    const dayInfo = await chrome.runtime.sendMessage({ action: 'getDayInfo' });
+    const currentDayId = dayInfo.currentDayId;
+    
+    // Check if day has changed since last update
+    if (result.currentDayId !== currentDayId) {
+        // Day transition - reset current intake
+        await chrome.storage.local.set({
+            waterIntakeCurrent: 0,
+            currentDayId: currentDayId
+        });
+        // Update result for calculations below
+        result.waterIntakeCurrent = 0;
+        result.currentDayId = currentDayId;
+    }
+    
     // Add the custom water increment
-    const newCurrent = current + increment;
+    const newCurrent = (result.waterIntakeCurrent || 0) + increment;
     
     // Get or initialize water history
     const history: WaterHistoryEntry[] = result.waterHistory || [];
-    const today = new Date().toDateString();
     
-    // Filter today's entries only (for history management)
+    // Filter today's entries only (using currentDayId instead of date string)
     const todayHistory = history.filter((entry: WaterHistoryEntry) => {
-        const entryDate = new Date(entry.timestamp).toDateString();
-        return entryDate === today;
+        const entryDate = new Date(entry.timestamp).toISOString().split('T')[0];
+        return entryDate === currentDayId;
     });
     
     // Add new entry
@@ -192,21 +220,22 @@ async function addWater() {
     // Combine with today's updated history
     const finalHistory = [
         ...recentHistory.filter((entry: WaterHistoryEntry) => {
-            const entryDate = new Date(entry.timestamp).toDateString();
-            return entryDate !== today;
+            const entryDate = new Date(entry.timestamp).toISOString().split('T')[0];
+            return entryDate !== currentDayId;
         }),
         ...updatedTodayHistory
     ];
     
     await chrome.storage.local.set({
         waterIntakeCurrent: Math.min(newCurrent, target * 1.5), // Cap at 150% of target
-        waterHistory: finalHistory
+        waterHistory: finalHistory,
+        currentDayId: currentDayId // Ensure day ID is stored
     });
     
     updateProgressBar();
     
     // Show celebration if goal reached
-    if (newCurrent >= target && current < target) {
+    if (newCurrent >= target && (result.waterIntakeCurrent || 0) < target) {
         showCelebration();
     }
 }
@@ -245,14 +274,19 @@ function hideSettings() {
 }
 
 async function loadSettings() {
-    const result = await chrome.storage.local.get(['waterIncrement', 'notificationsEnabled', 'petEnabled']);
+    const result = await chrome.storage.local.get(['waterIncrement', 'notificationsEnabled', 'petEnabled', 'dayStartHour']);
     
     const waterAmountSelect = document.getElementById('waterAmount') as HTMLSelectElement;
+    const dayStartTimeSelect = document.getElementById('dayStartTime') as HTMLSelectElement;
     const notificationsCheckbox = document.getElementById('notifications') as HTMLInputElement;
     const petCheckbox = document.getElementById('pet') as HTMLInputElement;
     
     if (waterAmountSelect) {
         waterAmountSelect.value = (result.waterIncrement || 250).toString();
+    }
+    
+    if (dayStartTimeSelect) {
+        dayStartTimeSelect.value = (result.dayStartHour || 6).toString();
     }
     
     if (notificationsCheckbox) {
@@ -266,16 +300,24 @@ async function loadSettings() {
 
 async function saveSettings() {
     const waterAmountSelect = document.getElementById('waterAmount') as HTMLSelectElement;
+    const dayStartTimeSelect = document.getElementById('dayStartTime') as HTMLSelectElement;
     const notificationsCheckbox = document.getElementById('notifications') as HTMLInputElement;
     const petCheckbox = document.getElementById('pet') as HTMLInputElement;
     
     const settings = {
         waterIncrement: parseInt(waterAmountSelect?.value || '250'),
+        dayStartHour: parseInt(dayStartTimeSelect?.value || '6'),
         notificationsEnabled: notificationsCheckbox?.checked || false,
         petEnabled: petCheckbox?.checked || false
     };
     
     await chrome.storage.local.set(settings);
+    
+    // Update background script with new day start hour
+    await chrome.runtime.sendMessage({ 
+        action: 'updateDayStartHour', 
+        hour: settings.dayStartHour 
+    });
     
     // Show save confirmation
     const saveBtn = document.getElementById('saveSettings');
