@@ -6,6 +6,12 @@ import '/styles/components/modal.css';
 import '/styles/components/pages.css';
 import '/styles/components/progress.css';
 
+// Type definitions
+interface WaterHistoryEntry {
+    timestamp: number;
+    amount: number;
+    method: 'manual' | 'reminder' | 'auto';
+}
 
 // Slider functionality
 function updateSlider() {
@@ -151,7 +157,7 @@ async function updateProgressBar() {
 }
 
 async function addWater() {
-    const result = await chrome.storage.local.get(['waterIntakeTarget', 'waterIntakeCurrent', 'waterIncrement']);
+    const result = await chrome.storage.local.get(['waterIntakeTarget', 'waterIntakeCurrent', 'waterIncrement', 'waterHistory']);
     const current = result.waterIntakeCurrent || 0;
     const target = result.waterIntakeTarget || 0;
     const increment = result.waterIncrement || 250; // Default to 250ml
@@ -159,8 +165,42 @@ async function addWater() {
     // Add the custom water increment
     const newCurrent = current + increment;
     
+    // Get or initialize water history
+    const history: WaterHistoryEntry[] = result.waterHistory || [];
+    const today = new Date().toDateString();
+    
+    // Filter today's entries only (for history management)
+    const todayHistory = history.filter((entry: WaterHistoryEntry) => {
+        const entryDate = new Date(entry.timestamp).toDateString();
+        return entryDate === today;
+    });
+    
+    // Add new entry
+    const newEntry: WaterHistoryEntry = {
+        timestamp: Date.now(),
+        amount: increment,
+        method: 'manual' // Could be 'manual', 'reminder', etc.
+    };
+    
+    // Keep only last 50 entries per day to manage storage
+    const updatedTodayHistory = [...todayHistory, newEntry].slice(-50);
+    
+    // Keep history from last 7 days only
+    const sevenDaysAgo = Date.now() - (7 * 24 * 60 * 60 * 1000);
+    const recentHistory = history.filter((entry: WaterHistoryEntry) => entry.timestamp > sevenDaysAgo);
+    
+    // Combine with today's updated history
+    const finalHistory = [
+        ...recentHistory.filter((entry: WaterHistoryEntry) => {
+            const entryDate = new Date(entry.timestamp).toDateString();
+            return entryDate !== today;
+        }),
+        ...updatedTodayHistory
+    ];
+    
     await chrome.storage.local.set({
-        waterIntakeCurrent: Math.min(newCurrent, target * 1.5) // Cap at 150% of target
+        waterIntakeCurrent: Math.min(newCurrent, target * 1.5), // Cap at 150% of target
+        waterHistory: finalHistory
     });
     
     updateProgressBar();

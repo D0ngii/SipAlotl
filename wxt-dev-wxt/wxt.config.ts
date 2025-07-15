@@ -23,6 +23,8 @@ export default defineConfig({
     permissions: [
       'storage',
       'activeTab',
+      'alarms',
+      'notifications',
     ],
 
     host_permissions: [
